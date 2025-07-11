@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Users>
+  <User id="1">
+    <name>brav88</name>
+    <pwd>admin$123</pwd>
+    <status>active</status>
+  </User>
+  <User id="2">
+    <name>john.doe</name>
+    <pwd>admin$123</pwd>
+    <status>inactive</status>
+  </User>
+</Users>

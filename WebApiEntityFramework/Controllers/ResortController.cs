@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiEntityFramework.DatabaseHelper;
 using WebApiEntityFramework.Model;
@@ -19,29 +20,49 @@ namespace WebApiEntityFramework.Controllers
 		}
 
 		// GET: api/<ResortController>
+		[Authorize]
 		[HttpGet]
-		public async Task<List<Resort>> Get()
+		public IQueryable<Resort> Get()
 		{
-			return await _context.Resorts.ToListAsync();
+			//return await _context.Resorts.ToListAsync();
+
+			var resultados = from x in _context.Resorts							
+							 select x;
+
+			return resultados;
 		}
 
 		// GET api/<ResortController>/5
+		[Authorize]
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public IQueryable<Resort> Get(int id)
 		{
-			return "value";
+			//return await _context.Resorts.ToListAsync();
+			//return await _context.Resorts.Where(r => r.Id == id).ToListAsync();
+
+			var resultados = from x in _context.Resorts
+							 where x.Id == id
+							 select x;
+
+			return resultados;
 		}
 
 		// POST api/<ResortController>
+		[Authorize]
 		[HttpPost]
-		public void Post([FromBody] string value)
-		{
+		public IActionResult Post([FromBody] Resort value)
+		{					
+			_context.Resorts.Add(value);
+			_context.SaveChanges();
+
+			return Ok();
 		}
 
 		// PUT api/<ResortController>/5
 		[HttpPut("{id}")]
 		public void Put(int id, [FromBody] string value)
 		{
+
 		}
 
 		// DELETE api/<ResortController>/5
